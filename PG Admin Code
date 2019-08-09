@@ -1,0 +1,38 @@
+
+-- Create one Tables
+CREATE TABLE failure_analysis_cases (
+  fa_site TEXT,
+	bu text,
+	pf text,
+	closure_code text,
+	fa_case text PRIMARY KEY,
+	date_ integer,
+  sr int,
+  so int,
+	csc_global_name text
+);
+
+
+ALTER TABLE failure_analysis_case ADD COLUMN date_ date;
+
+drop table failure_analysis_cases
+
+
+
+
+
+select distinct closure_code
+from failure_analysis_cases;
+
+update failure_analysis_cases
+set closure_code = 'closed'
+where closure_code in ('Unable to Duplicate / Isolate / Insufficient Data', 'FA Canceled');
+
+update failure_analysis_cases
+set closure_code = 'open'
+where closure_code in ('Fault Isolated', '*Open')
+
+
+SELECT count ('closure_code'), pf, fa_site from failure_analysis_cases
+where closure_code in ('open')
+GROUP BY fa_site, pf
